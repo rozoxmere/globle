@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  Witaj {{ user.username }}!
+
+Dzisiejsze wyniki : 
+    <table style="border: 1px solid black;">
+        <tr>
+            <td>Patrycja</td>
+            {% if pati == "brak_dostepu" %}
+            <td>
+                Wynik w systemie, wpisz swój aby go wyświetlić
+            </td>
+            {% elif pati == "empty" %}
+            <td>
+                Wynik jeszcze nie wprowadzony
+            </td>
+            {% else %}
+            <td>
+                {{pati.number_of_tries}}
+            </td>
+            <td>
+                {{pati.date}}
+            </td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td>Paweł</td>
+            {% if pawel == "brak_dostepu" %}
+            <td>
+                Wynik w systemie, wpisz swój aby go wyświetlić
+            </td>
+            {% elif pawel == "empty" %}
+            <td>
+                Wynik jeszcze nie wprowadzony
+            </td>
+            {% else %}
+            <td>
+                {{pawel.number_of_tries}}
+            </td>
+            <td>
+                {{pawel.date}}
+            </td>
+            {% endif %}
+        </tr>
+    </table>
+    {% if if_form_enabled %}
+        <a href="{% url 'add-score' %}">Wpisz swoj wynik</a>
+    {% endif %}
+  <p><a href="{% url 'logout' %}">Log Out</a></p>
+
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">Log In</a>
+{% endif %}
+{% endblock %}
