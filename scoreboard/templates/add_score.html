@@ -6,7 +6,7 @@
 {% if user.is_authenticated %}
 <div class="header">
   <a href="{% url 'Homepage' %}"><i class="fas fa-arrow-left" title="Powrót na poprzednią stronę"></i></a>
-  <div class="title">Witaj {{user.username}}!</div>
+  <div class="title">Witaj {{user.username | title}}!</div>
   <a href="{% url 'logout' %}"><i class="fas fa-right-from-bracket" title="Wyloguj"></i></a>
 </div>
 
@@ -18,7 +18,7 @@
       {% csrf_token %}
       <div class="row">
         <i class="fas fa-hashtag"></i>
-        <input type="number" name="number_of_tries" required="" id="id_number_of_tries">
+        <input type="number" placeholder="Wpisz wynik" name="number_of_tries" required="" id="id_number_of_tries">
       </div>
       <div class="row button">
         <input type="submit" value="Dodaj wynik">

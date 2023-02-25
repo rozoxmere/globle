@@ -4,54 +4,85 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-  Witaj {{ user.username }}!
+<div class="header">
+    <i class="fas fa-arrow-left hidden"></i>
+    <div class="title">Witaj {{user.username | title}}!</div>
+    <a href="{% url 'logout' %}"><i class="fas fa-right-from-bracket" title="Wyloguj"></i></a>
+</div>
+<div class="container">
+    <div class="wrapper">
+        <div class="title">
+            Dzisiejsze wyniki
+        </div>
+        <div class="table">
+        <table style="border: 1px solid black;">
+            <tr>
+                <td>Patrycja</td colspan="2">
+                {% if pati == "brak_dostepu" %}
+                <td>
+                    Wynik w systemie, wpisz swój aby go wyświetlić
+                </td>
+                {% elif pati == "empty" %}
+                <td colspan="2">
+                    Wynik jeszcze nie wprowadzony
+                </td>
+                {% else %}
+                <td>
+                    {{pati.number_of_tries}}
+                </td>
+                <td>
+                    {{pati.date|date:"H:i:s"}}
+                </td>
+                {% endif %}
+            </tr>
+            <tr>
+                <td>Paweł</td>
+                {% if pawel == "brak_dostepu" %}
+                <td colspan="2">
+                    Wynik w systemie, wpisz swój aby go wyświetlić
+                </td>
+                {% elif pawel == "empty" %}
+                <td colspan="2">
+                    Wynik jeszcze nie wprowadzony
+                </td>
+                {% else %}
+                <td>
+                    {{pawel.number_of_tries}}
+                </td>
+                <td>
+                    {{pawel.date|date:"H:i:s"}}
+                </td>
+                {% endif %}
+            </tr>
+        </table>
+    </div>
 
-Dzisiejsze wyniki : 
-    <table style="border: 1px solid black;">
-        <tr>
-            <td>Patrycja</td>
-            {% if pati == "brak_dostepu" %}
-            <td>
-                Wynik w systemie, wpisz swój aby go wyświetlić
-            </td>
-            {% elif pati == "empty" %}
-            <td>
-                Wynik jeszcze nie wprowadzony
-            </td>
-            {% else %}
-            <td>
-                {{pati.number_of_tries}}
-            </td>
-            <td>
-                {{pati.date}}
-            </td>
-            {% endif %}
-        </tr>
-        <tr>
-            <td>Paweł</td>
-            {% if pawel == "brak_dostepu" %}
-            <td>
-                Wynik w systemie, wpisz swój aby go wyświetlić
-            </td>
-            {% elif pawel == "empty" %}
-            <td>
-                Wynik jeszcze nie wprowadzony
-            </td>
-            {% else %}
-            <td>
-                {{pawel.number_of_tries}}
-            </td>
-            <td>
-                {{pawel.date}}
-            </td>
-            {% endif %}
-        </tr>
-    </table>
-    {% if if_form_enabled %}
-        <a href="{% url 'add-score' %}">Wpisz swoj wynik</a>
-    {% endif %}
-  <p><a href="{% url 'logout' %}">Log Out</a></p>
+        {% if if_form_enabled %}
+        <form action="" class="form">
+            <div class="row">
+                <div class="button">
+                    <a href="{% url 'add-score' %}"><input type="button" value="Wpisz swój wynik" /></a>
+                </div>
+            </div>
+        </form>
+        {% endif %}
+        {% if winner != None %}
+        <form action="" class="form">
+            <div class="row">
+                <div class="button winner-button">
+                    {% if winner == "REMIS"%}
+                     <input disabled value="REMIS!" />
+                    {% else %}
+                   <input disabled value="Zwyciężca:" />
+                   <p class="winner">{{winner.user.username | title}}</p>
+                   {% endif %}
 
+                </div>
+            </div>
+        </form>
+        {% endif %}
+    </div>
+</div>
 {% else %}
 <div class="container">
     <div class="wrapper">
@@ -61,10 +92,10 @@ Dzisiejsze wyniki :
         <form action="" class="form">
             <div class="row">
                 <div class="button ">
-                    <a href="{% url 'login' %}"><input value="Zaloguj się"/></a>
+                    <a href="{% url 'login' %}"><input type="button" value="Zaloguj się" /></a>
                 </div>
             </div>
-        
+
         </form>
     </div>
 </div>
