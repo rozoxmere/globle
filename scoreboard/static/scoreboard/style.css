@@ -9,6 +9,31 @@
 body {
     background-color: #74b9ff;
     font-family: "Kanit", sans-serif;
+    margin: 0;
+}
+
+.header{
+    margin: auto;
+    width: 380px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #0984e3;
+    border-radius: 0 0 10px 10px;
+}
+
+.header i{
+    background-color: white;
+    border-radius: 7px;
+    padding: 10px;
+    margin: 5px 10px;
+    font-size: 20px;
+    color: #0984e3;
+}
+
+.header .title {
+    font-size: 24px;
+    line-height: 50px;
+
 }
 
 .wrapper{
@@ -73,6 +98,7 @@ form input{
     background: #0984e3;
     border: 1px solid #74b9ff;
     cursor: pointer;
+    text-align: center;
   }
 .button input:hover{
     background: #0984e3;
