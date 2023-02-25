@@ -4,12 +4,24 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-
-<h2>Logowanie</h2>
-<form  method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Zaloguj się</button>
-</form>
-
+<div class="container">
+    <div class="wrapper">
+        <div class="title"><span>Logowanie</span></div>
+        <form method="post" class="form">
+            {% csrf_token %}
+            <div class="row">
+                <i class="fas fa-user"></i>
+                <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username"
+                    maxlength="150" required="" id="id_username" placeholder="Login">
+            </div>
+            <div class="row">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" autocomplete="current-password" required="" id="id_password" placeholder="Hasło">
+            </div>
+            <div class="row button">
+                <input type="submit" value="Zaloguj się">
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}
