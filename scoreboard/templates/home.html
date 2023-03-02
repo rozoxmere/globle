@@ -5,7 +5,7 @@
 {% block content %}
 {% if user.is_authenticated %}
 <div class="header">
-    <i class="fas fa-arrow-left hidden"></i>
+    <a href="{% url 'monthly' %}"><i class="fas fa-calendar-days" title="Wyloguj"></i></a>
     <div class="title">Witaj {{user.username | title}}!</div>
     <a href="{% url 'logout' %}"><i class="fas fa-right-from-bracket" title="Wyloguj"></i></a>
 </div>
