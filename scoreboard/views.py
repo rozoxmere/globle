@@ -28,9 +28,11 @@ def homepage(request):
     pati = Score.objects.filter(date__gt=today, user = User.objects.get(pk=3))
     print(pawel)
     winner = None
-    if pawel and pati:
+    if pawel:
         pawel = pawel[0]
+    if pati:
         pati = pati[0]
+    if pawel and pati:
         if pawel.number_of_tries > pati.number_of_tries:
             winner = pati
         elif pawel.number_of_tries < pati.number_of_tries:
@@ -48,10 +50,53 @@ def homepage(request):
         "if_form_enabled" : True if ((str(request.user) == "pati" and pati is "empty") or (str(request.user) == "pawel" and pawel is "empty")) else False,
         "winner" : winner,
     }
-    print(pawel)
-    print(pati)
     print(context)
     return render(request, "home.html", context )
+
+
+def scoreboard_view(request):
+    today = datetime.date.today()
+    pawel_month = Score.objects.filter(date__month=today.month, date__year=today.year, user = User.objects.get(pk=2))
+    pawel_score_in_month = []
+    pati_month = Score.objects.filter(date__month=today.month, date__year=today.year, user = User.objects.get(pk=3))
+    pati_score_in_month = []
+    scores = []
+    total_monthly_score = [0,0]
+    for i in range(today.day):
+        print(i)
+        #Wypisywanie wartości w danym dniu
+        if pawel_month.filter(date__day=i+1):
+            pawel_score_in_month.append(pawel_month.get(date__day=i+1).number_of_tries)
+        else:
+            pawel_score_in_month.append(-1)
+        if pati_month.filter(date__day=i+1):
+            pati_score_in_month.append(pati_month.get(date__day=i+1).number_of_tries)
+        else:
+            pati_score_in_month.append(-1)
+
+        # Obliczanie wyników:
+        if pati_score_in_month[i] == pawel_score_in_month[i]:
+            scores.append([0.5, 0.5])
+            total_monthly_score[0] = total_monthly_score[0] + 0.5
+            total_monthly_score[1] = total_monthly_score[1] + 0.5
+        elif pawel_score_in_month[i] > pati_score_in_month[i]:
+            scores.append([1,0])
+            total_monthly_score[0] = total_monthly_score[0] + 1
+        elif pawel_score_in_month[i] < pati_score_in_month[i]:
+            scores.append([0,1])
+            total_monthly_score[1] = total_monthly_score[1] + 1
+
+
+    
+    context = {
+        "pawel_wyniki" : pawel_score_in_month,
+        "pati_wyniki" : pati_score_in_month,
+        "score" : scores,
+        "total_score" : total_monthly_score,
+        "current_month" : today.strftime("%B")
+    }
+    print(context)
+    return render(request, "monthly.html", context)
 
 # import datetime
 # from .models import Score

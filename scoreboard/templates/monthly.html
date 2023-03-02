@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="header">
+    <i class="fas fa-arrow-left hidden"></i>
+    <div class="title">Witaj {{user.username | title}}!</div>
+    <a href="{% url 'logout' %}"><i class="fas fa-right-from-bracket" title="Wyloguj"></i></a>
+</div>
+<div class="container">
+    <div class="wrapper">
+        <div class="title">
+            Wyniki w {{current_month}}
+        </div>
+        <div class="table month">
+        <table>
+            <tr>
+                <td> Dzień </td>
+                {% for element in pawel_wyniki%}
+                    <td>{{forloop.counter}}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Paweł</td>
+                {% for element in pawel_wyniki%}
+                    {% if element == -1 %}
+                        <td>DNF</td>
+                    {% else %}
+                        <td>{{element}}</td>
+                    {% endif%}
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Wynik</td>
+                {% for element in score%}
+                    <td>{{element}}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td>Patrycja</td>
+                {% for element in pati_wyniki%}
+                    {% if element == -1 %}
+                        <td>DNF</td>
+                    {% else %}
+                        <td>{{element}}</td>
+                    {% endif%}
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+    <form action="" class="form">
+        <div class="row">
+            <div class="button winner-button">
+               <input disabled value="Wynik:" />
+               <p class="winner">Paweł {{total_score}} Patrycja</p>
+
+            </div>
+        </div>
+    </form>
+</div>
+{% else %}
+<div class="container">
+    <div class="wrapper">
+        <div class="title">
+            <p>You are not logged in</p>
+        </div>
+        <form action="" class="form">
+            <div class="row">
+                <div class="button ">
+                    <a href="{% url 'login' %}"><input type="button" value="Zaloguj się" /></a>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -140,3 +140,13 @@ form input{
 .hidden {
     visibility: hidden;
 }
+
+.month_table table {
+	display: table;    
+}
+.month table tr {
+	display: table-cell;
+}
+.month table tr td {
+	display: block;
+}
