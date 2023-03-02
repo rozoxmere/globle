@@ -79,10 +79,10 @@ def scoreboard_view(request):
             scores.append([0.5, 0.5])
             total_monthly_score[0] = total_monthly_score[0] + 0.5
             total_monthly_score[1] = total_monthly_score[1] + 0.5
-        elif pawel_score_in_month[i] > pati_score_in_month[i]:
+        elif pawel_score_in_month[i] < pati_score_in_month[i]:
             scores.append([1,0])
             total_monthly_score[0] = total_monthly_score[0] + 1
-        elif pawel_score_in_month[i] < pati_score_in_month[i]:
+        elif pawel_score_in_month[i] > pati_score_in_month[i]:
             scores.append([0,1])
             total_monthly_score[1] = total_monthly_score[1] + 1
 
